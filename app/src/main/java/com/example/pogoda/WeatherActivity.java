@@ -2,14 +2,16 @@ package com.example.pogoda;
 
 import android.content.Intent;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WeatherActivity extends AppCompatActivity {
     private TextView cityName,temp,maxTemp,minTemp,pressure,humidity,time;
+    private ImageView icon;
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class WeatherActivity extends AppCompatActivity {
         pressure = findViewById(R.id.textViewPressure);
         time = findViewById(R.id.textViewTime);
         humidity = findViewById(R.id.textViewHumidity);
+        icon = findViewById(R.id.imageView3);
 
         final String API = "749561a315b14523a8f5f1ef95e45864";
         final String UNITS = "METRIC";
@@ -68,7 +72,7 @@ public class WeatherActivity extends AppCompatActivity {
                         minTemp.setText(response.body().getMain().getTempMin() + " C");
                         maxTemp.setText(response.body().getMain().getTempMax() + " C");
                         humidity.setText(response.body().getMain().getHumidity() + " %");
-
+                        Picasso.get().load("http://openweathermap.org/img/w/"+response.body().getWeather().get(0).getIcon()+".png").into(icon);
                     }else {
                         Intent returnBtn = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(returnBtn);

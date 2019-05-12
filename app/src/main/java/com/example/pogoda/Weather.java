@@ -19,6 +19,9 @@ public class Weather {
     @SerializedName("temp_max")
     private float tempMax;
 
+    @SerializedName("icon")
+    private String icon;
+
 
 
 
@@ -44,5 +47,8 @@ public class Weather {
         return tempMin;
     }
 
+    public String getIcon() {
+        return icon;
+    }
 
 }
